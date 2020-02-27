@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ColorPicker3_2</string>
+    <string name="color_name">Color Name</string>
+    <string name="color_value">Color Value</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="colorR_value">0</string>
+    <string name="colorG_value">0</string>
+    <string name="colorB_value">0</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_color_name">Enter color name.</string>
+</resources>
