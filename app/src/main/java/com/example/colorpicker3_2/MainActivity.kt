@@ -1,6 +1,8 @@
 package com.example.colorpicker3_2
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +10,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
@@ -33,6 +36,22 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         supportActionBar?.setLogo(R.drawable.nickg)
         supportActionBar?.setDisplayUseLogoEnabled(true)
 
+        val info = intent.extras
+        val sendBut = findViewById<Button>(R.id.send_button)
+        if (info != null){
+            if(info.containsKey("Request Code")){
+                println("it contains the key")
+                var returnText = getColorText()
+
+                sendBut.visibility = View.VISIBLE
+                sendBut.setOnClickListener {
+                    finish()
+                }
+            }
+            else{
+                sendBut.visibility = View.GONE
+            }
+        }
 
     }
 
@@ -145,6 +164,24 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         seekBar_blue.progress = blue
         colorSwatch.setBackgroundColor(tempColor)
 
+    }
+
+    private fun getColorText(): String{
+        var tempColor = ((colorSwatch.background as ColorDrawable).color)
+        val red: Int = tempColor shr 16 and 0xFF
+        val green: Int = tempColor shr 8 and 0xFF
+        val blue: Int = tempColor shr 0 and 0xFF
+        val sendText = "$red $green $blue"
+        return sendText
+    }
+
+    override fun finish() {
+        val sendIntent = Intent().apply{
+            putExtra("colorText", getColorText())
+            type = "text/plain"
+        }
+        setResult(RESULT_OK, sendIntent)
+        super.finish()
     }
 
 }
